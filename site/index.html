@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ನಮ್ಮ ಗಾಳಿ (Namma Gaali) · Next-day AQI forecast for Bengaluru</title>
+  <meta name="description" content="Station-level next-day Air Quality Index forecast for Bengaluru, with the model's accuracy shown openly.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+Kannada:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/maplibre-gl@5/dist/maplibre-gl.css" rel="stylesheet">
+  <link href="style.css?v=9" rel="stylesheet">
+</head>
+<body>
+
+  <div id="intro">
+    <h1 lang="kn">ನಮ್ಮ ಗಾಳಿ</h1>
+    <p>Namma Gaali · Next-day AQI forecast for Bengaluru</p>
+    <button id="skip" type="button">Skip intro</button>
+  </div>
+
+  <div class="app">
+    <aside class="panel" id="panel">
+      <div class="panel-inner">
+        <header class="brand">
+          <h2 lang="kn">ನಮ್ಮ ಗಾಳಿ</h2>
+          <span>Namma Gaali · Next-day AQI forecast · Bengaluru</span>
+        </header>
+
+        <div class="demo-banner" id="demo-banner">
+          <strong>Demo on historical data.</strong> Snapshot of <span id="demo-date">14 Mar 2020</span>,
+          the last normal day before the COVID lockdown, from official CPCB station readings.
+          The forecast for the next day is shown next to what actually happened.
+          With a live CPCB feed, the same pipeline would forecast tomorrow every day.
+        </div>
+
+        <label class="field" for="station-select">
+          <span>Monitoring station</span>
+          <select id="station-select"></select>
+        </label>
+        <p class="hint">Or click anywhere on the map: a mall, a road, your college. The nearest station is picked automatically.</p>
+
+        <section class="card station" aria-live="polite">
+          <h3 id="st-name">–</h3>
+          <p id="st-near" class="near"></p>
+
+          <div class="metrics">
+            <div class="metric">
+              <span class="label">Latest recorded</span>
+              <span class="value" id="latest-aqi">–</span>
+              <span class="pill" id="latest-cat"></span>
+              <span class="date" id="latest-date"></span>
+            </div>
+            <div class="metric highlight">
+              <span class="label">Predicted next day</span>
+              <span class="value" id="pred-aqi">–</span>
+              <span class="pill" id="pred-cat"></span>
+              <span class="date" id="pred-date"></span>
+              <span class="actual" id="pred-actual"></span>
+            </div>
+          </div>
+
+          <div class="history">
+            <span class="label">Recent readings</span>
+            <div class="bars" id="bars"></div>
+          </div>
+
+          <div class="accuracy" id="accuracy"></div>
+        </section>
+
+        <section class="card advice" id="advice-card">
+          <h3>Precautions <span id="advice-cat"></span></h3>
+          <p id="advice-impact" class="impact"></p>
+          <ul id="advice-list"></ul>
+        </section>
+
+        <section class="card summary" id="summary"></section>
+
+        <footer class="note">
+          Demo on historical data: CPCB station readings (via Kaggle, 2015–2020). Each station shows its last recorded day and the model's forecast for the day after.
+          Station locations are approximate. Precautions follow India's National AQI categories.
+          <br><strong>Next step:</strong> connect the official real-time CPCB feed (data.gov.in) and re-run the forecast daily.
+        </footer>
+      </div>
+    </aside>
+
+    <main class="map-wrap">
+      <div id="map" aria-label="Map of Bengaluru air-quality stations"></div>
+      <div class="legend" aria-hidden="true">
+        <span><i style="background:#2E7D32"></i>Good</span>
+        <span><i style="background:#8BC34A"></i>Satisfactory</span>
+        <span><i style="background:#F4C430"></i>Moderate</span>
+        <span><i style="background:#F28C28"></i>Poor</span>
+        <span><i style="background:#D32F2F"></i>Very Poor</span>
+        <span><i style="background:#7B1E1E"></i>Severe</span>
+      </div>
+      <div id="status" class="status">Loading forecasts…</div>
+    </main>
+  </div>
+
+  <script src="https://unpkg.com/maplibre-gl@5/dist/maplibre-gl.js"></script>
+  <script src="data.js?v=9"></script>
+  <script src="app.js?v=9"></script>
+</body>
+</html>
